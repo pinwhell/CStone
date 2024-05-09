@@ -1,7 +1,7 @@
-if(NOT capstone)
+if(NOT TARGET capstone)
 	add_subdirectory(capstone)
 endif()
 
-if(NOT fmt)
+if(NOT TARGET fmt)
 	add_subdirectory(fmt)
 endif()
