@@ -5,5 +5,5 @@
 
 class ICapstoneFactory {
 public:
-    virtual std::unique_ptr<ICapstone> CreateCapstoneInstance(bool bDetailedInst = true) = 0;
+    virtual std::unique_ptr<ICapstone> CreateInstance(bool bDetailedInst = true) = 0;
 };

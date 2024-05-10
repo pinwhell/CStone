@@ -25,7 +25,7 @@ class CapstoneFactory : public ICapstoneFactory
 public:
     CapstoneFactory(ECapstoneArchMode archMode);
 
-    std::unique_ptr<ICapstone> CreateCapstoneInstance(bool bDetailedInst = true) override;
+    std::unique_ptr<ICapstone> CreateInstance(bool bDetailedInst = true) override;
 
     ECapstoneArchMode mArchMode;
 };

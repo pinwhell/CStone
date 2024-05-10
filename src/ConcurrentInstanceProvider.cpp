@@ -18,7 +18,7 @@ ICapstone* CapstoneConcurrentInstanceProvider::GetInstance(bool bDetailedInstuct
             return nullptr;
 
         // This thread doesn't have a Capstone object yet, so create one.
-        mInstances[this_id] = factory->CreateCapstoneInstance(bDetailedInstuction);
+        mInstances[this_id] = factory->CreateInstance(bDetailedInstuction);
     }
 
     return mInstances[this_id].get();
