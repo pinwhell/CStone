@@ -2,6 +2,7 @@
 
 #include <mutex>
 #include <unordered_map>
+#include <thread>
 
 #include <CStone/ICapstone.h>
 #include <CStone/IProvider.h>
