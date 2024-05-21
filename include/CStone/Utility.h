@@ -51,20 +51,20 @@ public:
     }
 
     template<size_t T_REG_INVALID, typename CSInsDetailT>
-    static std::vector<uint64_t> InsnGetAllImms(CSInsDetailT& pInstDetail)
+    static std::vector<int64_t> InsnGetAllImms(CSInsDetailT& pInstDetail)
     {
-        std::vector<uint64_t> result;
+        std::vector<int64_t> result;
 
         InsnForEachOperand<CSInsDetailT, decltype(pInstDetail.operands[0])>(pInstDetail, [&](const auto& op) -> bool {
             switch (op.type)
             {
             case CS_OP_IMM:
-                result.push_back(op.imm);
+                result.push_back(static_cast<int64_t>(static_cast<int32_t>(op.imm)));
                 break;
 
             case CS_OP_MEM:
                 if (op.mem.index == T_REG_INVALID)
-                    result.push_back(op.mem.disp);
+                    result.push_back(static_cast<int64_t>(static_cast<int32_t>(op.mem.disp)));
                 break;
             }
 

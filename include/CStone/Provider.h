@@ -7,9 +7,9 @@
 #include <CStone/ICapstone.h>
 #include <CStone/IProvider.h>
 
-class CapstoneConcurrentInstanceProvider : public ICapstoneInstanceProvider {
+class CapstoneConcurrentProvider : public ICapstoneProvider {
 public:
-    CapstoneConcurrentInstanceProvider(ICapstoneFactory* defFactory = nullptr);
+    CapstoneConcurrentProvider(ICapstoneFactory* defFactory = nullptr);
 
     ICapstone* GetInstance(bool bDetailedInstuction = true, ICapstoneFactory* _factory = nullptr) override;
 

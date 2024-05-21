@@ -3,7 +3,7 @@
 #include <CStone/ICapstone.h>
 #include <CStone/IFactory.h>
 
-class ICapstoneInstanceProvider {
+class ICapstoneProvider {
 public:
-    virtual ICapstone* GetInstance(bool bDetailedInstuction = true, ICapstoneFactory* _factory = nullptr) = 0;
+    virtual ICapstone* GetInstance(bool bDetailedInstuction = true, ICapstoneFactory* factory = nullptr) = 0;
 };

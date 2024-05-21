@@ -2,11 +2,11 @@
 
 #include <CStone/Provider.h>
 
-CapstoneConcurrentInstanceProvider::CapstoneConcurrentInstanceProvider(ICapstoneFactory* defFactory)
+CapstoneConcurrentProvider::CapstoneConcurrentProvider(ICapstoneFactory* defFactory)
     : mDefaultFactory(defFactory)
 {}
 
-ICapstone* CapstoneConcurrentInstanceProvider::GetInstance(bool bDetailedInstuction, ICapstoneFactory* _factory)
+ICapstone* CapstoneConcurrentProvider::GetInstance(bool bDetailedInstuction, ICapstoneFactory* _factory)
 {
     std::thread::id this_id = std::this_thread::get_id();
 

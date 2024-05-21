@@ -23,9 +23,9 @@ bool ARM32CapstoneUtility::InsnHasRegister(const cs_insn* pIns, uint16_t reg) co
     return mBaseUtility.InsnHasRegister(pIns->detail->arm, reg);
 }
 
-uint64_t ARM32CapstoneUtility::InsnGetImmByIndex(const cs_insn* pIns, size_t index) const
+int64_t ARM32CapstoneUtility::InsnGetImmByIndex(const cs_insn* pIns, size_t index) const
 {
-    std::vector<uint64_t> allImms = mBaseUtility.InsnGetAllImms<ARM_REG_INVALID>(pIns->detail->arm);
+    std::vector<int64_t> allImms = mBaseUtility.InsnGetAllImms<ARM_REG_INVALID>(pIns->detail->arm);
 
     if (index < allImms.size())
         return allImms[index];
