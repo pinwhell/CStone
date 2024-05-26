@@ -9,6 +9,7 @@
 
 class ICapstone {
 public:
+    virtual ~ICapstone() {}
     virtual ICapstoneUtility* getUtility() = 0;
     virtual ICapstoneHeuristic* getHeuristic() = 0;
     virtual CapstoneDismHandle Disassemble(const void* start, size_t nBytes, uint64_t pcAddr = 0) = 0;

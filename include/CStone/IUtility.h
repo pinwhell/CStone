@@ -4,6 +4,7 @@
 
 class ICapstoneUtility {
 public:
+    virtual ~ICapstoneUtility() {}
     virtual bool InsnHasRegister(const cs_insn* pIns, uint16_t reg) const = 0;
     virtual int64_t InsnGetImmByIndex(const cs_insn* pIns, size_t index) const = 0;
     virtual uint16_t InsnGetPseudoDestReg(const cs_insn* pIns) const = 0;
