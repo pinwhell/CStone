@@ -2,6 +2,7 @@
 
 #include <fmt/core.h>
 #include <stdexcept>
+#include <CStone/Arch/ARM/32/Capstone.h>
 
 static bool InsnIsBranch(const cs_insn* pInsn)
 {
@@ -62,12 +63,11 @@ bool ARM32CapstoneUtility::InsnIsBranch(const cs_insn* pInsn) const
 
 const void* ARM32PCCompute(ICapstone* capstone, const void* at, uint64_t disp)
 {
-    auto dism = capstone->Disassemble(at, 4 * 2, (uint64_t)at);
-
-    if (dism.mCount < 2)
-        throw std::runtime_error(fmt::format("PC Follow {}: 2 instrunction disassembly failed", fmt::ptr((char*)at)));
-
-    return  (char*)at + disp + (dism.mpFirst[0].size + dism.mpFirst[1].size);
+    ARM32Capstone* armCstone = (ARM32Capstone*)capstone; // we need access to is thumb ...
+    auto pipelineDisp = armCstone->mbIsThumb ? 4ull : 8ull;
+    auto finalMask = armCstone->mbIsThumb ? ~0x3ull : ~0x0ull;
+   
+    return (char*)(((uint64_t)at + pipelineDisp + disp) & finalMask);
 }
 
 const void* ARM32LDRPCDispResolve(ICapstone* capstone, const void* at, bool bDerref)

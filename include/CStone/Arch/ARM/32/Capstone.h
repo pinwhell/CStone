@@ -18,4 +18,5 @@ public:
     Capstone mCapstone;
     ARM32CapstoneUtility mUtility;
     ARM32CapstoneHeuristic mHeuristic;
+    bool mbIsThumb;
 };

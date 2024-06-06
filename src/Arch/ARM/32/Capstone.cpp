@@ -1,7 +1,8 @@
 #include <CStone/Arch/ARM/32/Capstone.h>
 
-ARM32Capstone::ARM32Capstone(bool mbThumb, bool bDetailedInsn)
-    : mCapstone(CS_ARCH_ARM, mbThumb ? CS_MODE_THUMB : CS_MODE_ARM, bDetailedInsn)
+ARM32Capstone::ARM32Capstone(bool isThumb, bool bDetailedInsn)
+    : mCapstone(CS_ARCH_ARM, isThumb ? CS_MODE_THUMB : CS_MODE_ARM, bDetailedInsn)
+    , mbIsThumb(isThumb)
 {}
 
 ICapstoneUtility* ARM32Capstone::getUtility() {
