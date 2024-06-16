@@ -1,7 +1,5 @@
 #include <CStone/Factory.h>
-
 #include <CStone/Arch/ARM/32/Capstone.h>
-
 #include <fmt/core.h>
 
 CapstoneFactory::CapstoneFactory(ECapstoneArchMode archMode)

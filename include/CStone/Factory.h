@@ -4,16 +4,7 @@
 
 #include <CStone/ICapstone.h>
 #include <CStone/IFactory.h>
-
-enum class ECapstoneArchMode {
-    UNDEFINED,
-    X86_16,
-    X86_32,
-    X86_64,
-    ARM32_ARM,
-    ARM32_THUMB,
-    AARCH64_ARM,
-};
+#include <CStone/ECStone.h>
 
 class CapstoneCreationFailedException : public std::runtime_error {
 public:
