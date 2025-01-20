@@ -1,6 +1,0 @@
-[submodule "vendor/capstone"]
-	path = vendor/capstone
-	url = https://github.com/capstone-engine/capstone
-[submodule "vendor/fmt"]
-	path = vendor/fmt
-	url = https://github.com/fmtlib/fmt
