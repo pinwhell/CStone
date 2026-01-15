@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.15)
 
 project (CStone)
 
-option(USE_STATIC_LINKING "Use static linking for the runtime" ON)
+option(USE_STATIC_LINKING "Use static linking for the runtime" OFF)
 
 if (USE_STATIC_LINKING)
     if (MSVC)
@@ -14,10 +14,19 @@ if (USE_STATIC_LINKING)
     endif()
 endif()
 
+add_compile_definitions(CAPSTONE_AARCH64_COMPAT_HEADER)
+
 find_package(CBuildKit REQUIRED)
+
 
 add_subdirectory(vendor)
 add_subdirectory(src)
+
+option(BUILD_TESTS "Build tests" OFF)
+if(BUILD_TESTS)
+    enable_testing()
+    add_subdirectory(tests)
+endif()
 
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/
         DESTINATION include)
