@@ -2,18 +2,6 @@ cmake_minimum_required(VERSION 3.15)
 
 project (CStone)
 
-option(USE_STATIC_LINKING "Use static linking for the runtime" OFF)
-
-if (USE_STATIC_LINKING)
-    if (MSVC)
-        # MSVC specific static linking flag
-        add_compile_options(/MT$<$<CONFIG:Debug>:d>)
-    else()
-        # GCC/Clang specific static linking flag
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libgcc -static-libstdc++")
-    endif()
-endif()
-
 add_compile_definitions(CAPSTONE_AARCH64_COMPAT_HEADER)
 
 find_package(CBuildKit REQUIRED)

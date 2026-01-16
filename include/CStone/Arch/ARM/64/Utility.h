@@ -13,3 +13,7 @@ public:
 
     CapstoneUtility mBaseUtility;
 };
+
+const void* ARM64PCCompute(ICapstone* capstone, const void* at, uint64_t disp = 0);
+const void* ARM64LDRPCDispResolve(ICapstone* capstone, const void* at, bool bDerref = false);
+const void* ARM64FarPcRelLEATryResolve(ICapstone* capstone, const void* at, bool bDerref = false);
