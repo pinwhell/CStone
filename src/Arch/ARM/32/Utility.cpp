@@ -72,9 +72,7 @@ const void* ARM32PCCompute(ICapstone* capstone, const void* at, uint64_t disp)
 
 const void* ARM32LDRPCDispResolve(ICapstone* capstone, const void* at, bool bDerref)
 {
-    const void* _at = (const void*)at;
-
-    CsInsn insn = capstone->DisassembleOne(_at);
+    CsInsn insn = capstone->DisassembleOne(at);
 
     if (insn->id != ARM_INS_LDR)
         throw std::runtime_error(fmt::format("LEAPCDisp Follow '{} {}': unexpected instruction", insn->mnemonic, insn->op_str));
