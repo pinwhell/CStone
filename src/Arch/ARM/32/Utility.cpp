@@ -92,7 +92,7 @@ const void* ARM32LDRPCDispResolve(ICapstone* capstone, const void* at, bool bDer
 
 const void* ARM32FarPcRelLEATryResolve(ICapstone* capstone, const void* at, bool bDerref)
 {
-    uint32_t pcRelDisp = (uint32_t)(ARM32LDRPCDispResolve(capstone, at, true));
+    size_t pcRelDisp = size_t(ARM32LDRPCDispResolve(capstone, at, true));
     CsInsn ldrInsn = capstone->DisassembleOne((const void*)at);
     ICapstoneUtility* utility = capstone->getUtility();
     auto Rd = utility->InsnGetPseudoDestReg(&ldrInsn.mInsn);
