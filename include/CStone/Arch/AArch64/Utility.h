@@ -3,7 +3,7 @@
 #include <CStone/ICapstone.h>
 #include <CStone/Utility.h>
 
-class ARM64CapstoneUtility : public ICapstoneUtility {
+class AArch64CapstoneUtility : public ICapstoneUtility {
 public:
     bool InsnHasRegister(const cs_insn* pIns, uint16_t reg) const override;
     int64_t InsnGetImmByIndex(const cs_insn* pIns, size_t index) const override;
@@ -14,6 +14,6 @@ public:
     CapstoneUtility mBaseUtility;
 };
 
-const void* ARM64PCCompute(ICapstone* capstone, const void* at, uint64_t disp = 0);
-const void* ARM64LDRPCDispResolve(ICapstone* capstone, const void* at, bool bDerref = false);
-const void* ARM64FarPcRelLEATryResolve(ICapstone* capstone, const void* at, bool bDerref = false);
+const void* AArch64PCCompute(ICapstone* capstone, const void* at, uint64_t disp = 0);
+const void* AArch64LDRPCDispResolve(ICapstone* capstone, const void* at, bool bDerref = false);
+const void* AArch64FarPcRelLEATryResolve(ICapstone* capstone, const void* at, bool bDerref = false);

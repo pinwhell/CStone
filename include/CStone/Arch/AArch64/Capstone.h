@@ -2,12 +2,12 @@
 
 #include <CStone/CStone.h>
 
-#include <CStone/Arch/ARM/64/Utility.h>
-#include <CStone/Arch/ARM/64/Heuristic.h>
+#include <CStone/Arch/AArch64/Utility.h>
+#include <CStone/Arch/AArch64/Heuristic.h>
 
-class ARM64Capstone : public ICapstone {
+class AArch64Capstone : public ICapstone {
 public:
-    ARM64Capstone(bool bDetailedInsn = true);
+    AArch64Capstone(bool bDetailedInsn = true);
 
     ICapstoneUtility* getUtility() override;
     ICapstoneHeuristic* getHeuristic() override;
@@ -16,6 +16,6 @@ public:
     void InsnForEach(const void* start, std::function<bool(const CsInsn& insn)> callback, uint64_t pcAddr = 0, size_t buffSize = SIZE_MAX) override;
 
     Capstone mCapstone;
-    ARM64CapstoneUtility mUtility;
-    ARM64CapstoneHeuristic mHeuristic;
+    AArch64CapstoneUtility mUtility;
+    AArch64CapstoneHeuristic mHeuristic;
 };
