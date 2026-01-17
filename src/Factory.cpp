@@ -1,7 +1,7 @@
 #include <CStone/Factory.h>
 #include <CStone/Arch/ARM/32/Capstone.h>
 #include <CStone/Arch/ARM/64/Capstone.h>
-#include <fmt/core.h>
+#include <format>
 
 CapstoneFactory::CapstoneFactory(ECapstoneArchMode archMode)
     : mArchMode(archMode)
@@ -17,7 +17,7 @@ std::unique_ptr<ICapstone> CapstoneFactory::CreateInstance(bool bDetailedInst) {
         return std::move(std::make_unique<ARM64Capstone>(bDetailedInst));
 
     default:
-        throw CapstoneCreationFailedException(fmt::format("ArchMode:{} not implemented."));
+        throw CapstoneCreationFailedException(std::format("ArchMode not implemented."));
     }
 
     return 0;

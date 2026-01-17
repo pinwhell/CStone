@@ -1,14 +1,13 @@
 #include <CStone/CStone.h>
 #include <CStone/Factory.h>
 #include <CStone/Provider.h>
-
-#include <fmt/core.h>
+#include <format>
 
 Capstone::Capstone(cs_arch arch, cs_mode mode, bool bDetailedDisasm)
     : mhCapstone(0)
 {
     if (cs_err err = cs_open(arch, mode, &mhCapstone)) // != CS_ERR_OK(0)
-        throw std::runtime_error(fmt::format("Capstone Arch:{},Mode:{} {}", (int)arch, (int)mode, cs_strerror(err)));
+        throw std::runtime_error(std::format("Capstone Arch:{},Mode:{} {}", (int)arch, (int)mode, cs_strerror(err)));
 
     if (bDetailedDisasm)
         cs_option(mhCapstone, CS_OPT_DETAIL, CS_OPT_ON);
@@ -28,7 +27,7 @@ CapstoneDismHandle Capstone::Disassemble(const void* _start, size_t nBytes, uint
     size_t nInstCount = cs_disasm(mhCapstone, start, nBytes, pcAddr, 0, &startIns);
 
     if (nInstCount < 1)
-        throw DismFailedException(fmt::format("Addr:{},nBytes:{} disassembly failed", fmt::ptr(start), nBytes));
+        throw DismFailedException(std::format("Addr:{},nBytes:{} disassembly failed", (void*)start, nBytes));
 
     return CapstoneDismHandle(startIns, nInstCount);
 }
@@ -43,7 +42,7 @@ CsInsn Capstone::DisassembleOne(const void* start, uint64_t pcAddr)
         }, pcAddr);
 
     if (r->address != pcAddr)
-        throw DismFailedException(fmt::format("Addr:{} disassembly failed", fmt::ptr(start)));
+        throw DismFailedException(std::format("Addr:{} disassembly failed", (void*)(start)));
 
     return r;
 }

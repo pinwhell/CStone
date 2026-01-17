@@ -1,8 +1,7 @@
 #include <CStone/Arch/ARM/32/Utility.h>
-
-#include <fmt/core.h>
 #include <stdexcept>
 #include <CStone/Arch/ARM/32/Capstone.h>
+#include <format>
 
 static bool InsnIsBranch(const cs_insn* pInsn)
 {
@@ -31,7 +30,7 @@ int64_t ARM32CapstoneUtility::InsnGetImmByIndex(const cs_insn* pIns, size_t inde
     if (index < allImms.size())
         return allImms[index];
 
-    throw std::runtime_error(fmt::format("'{} {}' no imm at index '{}' ", pIns->mnemonic, pIns->op_str, index));
+    throw std::runtime_error(std::format("'{} {}' no imm at index '{}' ", pIns->mnemonic, pIns->op_str, index));
 
     return 0;
 }
@@ -46,7 +45,7 @@ uint16_t ARM32CapstoneUtility::InsnGetPseudoDestReg(const cs_insn* pIns) const
     // often follows a pattern XXX Rd, Rn, Operand2 ...
     // where Rd (first register operand) is the destination
 
-    throw std::runtime_error(fmt::format("'{} {}' no register operands found", pIns->mnemonic, pIns->op_str));
+    throw std::runtime_error(std::format("'{} {}' no register operands found", pIns->mnemonic, pIns->op_str));
 
     return 0;
 }
@@ -75,13 +74,13 @@ const void* ARM32LDRPCDispResolve(ICapstone* capstone, const void* at, bool bDer
     CsInsn insn = capstone->DisassembleOne(at);
 
     if (insn->id != ARM_INS_LDR)
-        throw std::runtime_error(fmt::format("LEAPCDisp Follow '{} {}': unexpected instruction", insn->mnemonic, insn->op_str));
+        throw std::runtime_error(std::format("LEAPCDisp Follow '{} {}': unexpected instruction", insn->mnemonic, insn->op_str));
 
     auto& memOp = insn->detail->arm.operands[1];
 
     if (memOp.type != CS_OP_MEM ||
         memOp.mem.index != ARM_REG_INVALID)
-        throw std::runtime_error(fmt::format("LEAPCDisp Follow '{} {}': unexpected instruction format", insn->mnemonic, insn->op_str));
+        throw std::runtime_error(std::format("LEAPCDisp Follow '{} {}': unexpected instruction format", insn->mnemonic, insn->op_str));
 
     const void* dstAddr = ARM32PCCompute(capstone, at, memOp.mem.disp);
 
@@ -116,7 +115,7 @@ const void* ARM32FarPcRelLEATryResolve(ICapstone* capstone, const void* at, bool
         }, (uint64_t)nextInsnStart);
 
     if (!bFound)
-        throw std::runtime_error(fmt::format("'{} {}' not found finalizer", ldrInsn->mnemonic, ldrInsn->op_str));
+        throw std::runtime_error(std::format("'{} {}' not found finalizer", ldrInsn->mnemonic, ldrInsn->op_str));
 
     return res;
 }

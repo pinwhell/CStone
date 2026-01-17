@@ -1,6 +1,6 @@
 #include <CStone/Arch/AArch64/Utility.h>
-#include <fmt/core.h>
 #include <stdexcept>
+#include <format>
 
 static bool StaticInsnIsBranch(const cs_insn* pInsn)
 {
@@ -36,7 +36,7 @@ int64_t AArch64CapstoneUtility::InsnGetImmByIndex(const cs_insn* pIns, size_t in
     if (index < allImms.size())
         return allImms[index];
 
-    throw std::runtime_error(fmt::format("'{} {}' no imm at index '{}' ", pIns->mnemonic, pIns->op_str, index));
+    throw std::runtime_error(std::format("'{} {}' no imm at index '{}' ", pIns->mnemonic, pIns->op_str, index));
 }
 
 uint16_t AArch64CapstoneUtility::InsnGetPseudoDestReg(const cs_insn* pIns) const
@@ -46,7 +46,7 @@ uint16_t AArch64CapstoneUtility::InsnGetPseudoDestReg(const cs_insn* pIns) const
     if (!allRegs.empty())
         return allRegs[0]; 
 
-    throw std::runtime_error(fmt::format("'{} {}' no register operands found", pIns->mnemonic, pIns->op_str));
+    throw std::runtime_error(std::format("'{} {}' no register operands found", pIns->mnemonic, pIns->op_str));
 }
 
 bool AArch64CapstoneUtility::InsnIsBranch(const cs_insn* pInsn) const
@@ -69,12 +69,12 @@ const void* AArch64LDRPCDispResolve(ICapstone* capstone, const void* at, bool bD
     CsInsn insn = capstone->DisassembleOne(at);
 
     if (insn->id != AARCH64_INS_LDR && insn->id != AARCH64_INS_LDRSW && insn->id != AARCH64_INS_PRFM)
-        throw std::runtime_error(fmt::format("AArch64LDRPCDispResolve '{} {}': unexpected instruction", insn->mnemonic, insn->op_str));
+        throw std::runtime_error(std::format("AArch64LDRPCDispResolve '{} {}': unexpected instruction", insn->mnemonic, insn->op_str));
 
     auto& ops = insn->detail->aarch64.operands;
 
     if (insn->detail->aarch64.op_count < 2)
-        throw std::runtime_error(fmt::format("AArch64LDRPCDispResolve '{} {}': too few operands", insn->mnemonic, insn->op_str));
+        throw std::runtime_error(std::format("AArch64LDRPCDispResolve '{} {}': too few operands", insn->mnemonic, insn->op_str));
 
     int64_t offset = 0;
     bool bHandled = false;
@@ -90,7 +90,7 @@ const void* AArch64LDRPCDispResolve(ICapstone* capstone, const void* at, bool bD
     }
 
     if (!bHandled)
-        throw std::runtime_error(fmt::format("AArch64LDRPCDispResolve '{} {}': unexpected operand types", insn->mnemonic, insn->op_str));
+        throw std::runtime_error(std::format("AArch64LDRPCDispResolve '{} {}': unexpected operand types", insn->mnemonic, insn->op_str));
 
     const void* dstAddr = AArch64PCCompute(capstone, at, offset);
 
