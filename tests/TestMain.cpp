@@ -3,8 +3,8 @@
 #include <cassert>
 #include <exception>
 #include <CStone/Factory.h>
-#include <CStone/Arch/ARM/32/Capstone.h>
-#include <CStone/Arch/ARM/64/Capstone.h>
+#include <CStone/Arch/AArch64/Capstone.h>
+#include <CStone/Arch/AArch64/Capstone.h>
 
 #define TEST_CHECK(cond) \
     do { \
@@ -46,34 +46,34 @@ void TestARM32() {
     TEST_LOG("  Verified: Branch (B.W)");
 }
 
-void TestARM64() {
-    TEST_LOG("Running ARM64 Tests...");
+void TestAARCH64() {
+    TEST_LOG("Running AARCH64 Tests...");
 
     CapstoneFactory factory(ECapstoneArchMode::AARCH64_ARM);
     auto capstone = factory.CreateInstance();
 
-    // ARM64: STP X29, X30, [SP, #-16]!
+    // AARCH64: STP X29, X30, [SP, #-16]!
     uint8_t prologueBytes[] = { 0xFD, 0x7B, 0xBF, 0xA9 };
     auto prologueInsn = capstone->DisassembleOne(prologueBytes);
 
-    TEST_CHECK(prologueInsn->id == ARM64_INS_STP);
+    TEST_CHECK(prologueInsn->id == AARCH64_INS_STP);
     TEST_CHECK(capstone->getHeuristic()->InsnIsProcedureEntry(&prologueInsn.mInsn));
     TEST_LOG("  Verified: Procedure Entry (STP x29, x30, ...)");
 
-    // ARM64: RET (C0 03 5F D6)
+    // AARCH64: RET (C0 03 5F D6)
     uint8_t epilogueBytes[] = { 0xC0, 0x03, 0x5F, 0xD6 };
     auto epilogueInsn = capstone->DisassembleOne(epilogueBytes);
 
-    TEST_CHECK(epilogueInsn->id == ARM64_INS_RET);
+    TEST_CHECK(epilogueInsn->id == AARCH64_INS_RET);
     TEST_CHECK(capstone->getHeuristic()->InsnIsProcedureExit(&epilogueInsn.mInsn));
     TEST_CHECK(capstone->getUtility()->InsnIsBranch(&epilogueInsn.mInsn) == false); // Utility doesn't classify RET as branch currently
     TEST_LOG("  Verified: Procedure Exit (RET)");
 
-    // ARM64: B label (01 00 00 14)
+    // AARCH64: B label (01 00 00 14)
     uint8_t branchBytes[] = { 0x01, 0x00, 0x00, 0x14 };
     auto branchInsn = capstone->DisassembleOne(branchBytes);
     
-    TEST_CHECK(branchInsn->id == ARM64_INS_B);
+    TEST_CHECK(branchInsn->id == AARCH64_INS_B);
     TEST_CHECK(capstone->getUtility()->InsnIsBranch(&branchInsn.mInsn));
     TEST_LOG("  Verified: Branch (B)");
 }
@@ -81,7 +81,7 @@ void TestARM64() {
 int main() {
     try {
         TestARM32();
-        TestARM64();
+        TestAARCH64();
         TEST_LOG("All tests passed successfully.");
     } catch (const std::exception& e) {
         std::cerr << "[-] Exception caught: " << e.what() << std::endl;

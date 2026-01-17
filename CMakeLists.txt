@@ -14,7 +14,7 @@ if (USE_STATIC_LINKING)
     endif()
 endif()
 
-find_package(CBuildKit REQUIRED)
+include(cmake/CBuildKit.cmake)
 
 add_subdirectory(vendor)
 add_subdirectory(src)

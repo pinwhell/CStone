@@ -1,5 +1,3 @@
-find_package(fmt REQUIRED)
-
 file(GLOB_RECURSE CSTONE_SRCS *.cpp)
 
 add_library_ns(cstone cstone STATIC ${CSTONE_SRCS})

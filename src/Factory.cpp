@@ -1,6 +1,6 @@
 #include <CStone/Factory.h>
 #include <CStone/Arch/ARM/32/Capstone.h>
-#include <CStone/Arch/ARM/64/Capstone.h>
+#include <CStone/Arch/AArch64/Capstone.h>
 #include <format>
 
 CapstoneFactory::CapstoneFactory(ECapstoneArchMode archMode)
@@ -14,7 +14,7 @@ std::unique_ptr<ICapstone> CapstoneFactory::CreateInstance(bool bDetailedInst) {
         return std::move(std::make_unique<ARM32Capstone>(ECapstoneArchMode::ARM32_THUMB == mArchMode, bDetailedInst));
 
     case ECapstoneArchMode::AARCH64_ARM:
-        return std::move(std::make_unique<ARM64Capstone>(bDetailedInst));
+        return std::move(std::make_unique<AArch64Capstone>(bDetailedInst));
 
     default:
         throw CapstoneCreationFailedException(std::format("ArchMode not implemented."));
